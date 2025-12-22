@@ -1,0 +1,7 @@
+{
+  "name": "Evaldo Poeta - Cartão Digital PCH",
+  "description": "Cartão de visita digital de Evaldo Poeta: Poeta Terapêutico, Psicanalista e Criador da PCH.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
