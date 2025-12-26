@@ -8,6 +8,7 @@ const App: React.FC = () => {
   const [nearbyPlaces, setNearbyPlaces] = useState<any>(null);
   const [isLocating, setIsLocating] = useState(false);
   const [shareStatus, setShareStatus] = useState<'idle' | 'copied'>('idle');
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saved'>('idle');
   const [profileImage, setProfileImage] = useState<string>('https://images.unsplash.com/photo-1611608822650-925c227ef4d2?auto=format&fit=crop&w=512&q=80');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -46,7 +47,10 @@ const App: React.FC = () => {
     link.click();
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
-    alert("Contato de Evaldo Poeta pronto para salvar na sua agenda!");
+    
+    // Feedback visual em vez de alert
+    setSaveStatus('saved');
+    setTimeout(() => setSaveStatus('idle'), 3000);
   };
 
   const shareCard = async () => {
@@ -136,26 +140,22 @@ const App: React.FC = () => {
           <div className="relative mb-6 group cursor-pointer" onClick={handleImageClick}>
             <div className="absolute -inset-4 bg-gradient-to-tr from-indigo-500/30 to-purple-400/20 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity"></div>
             
-            {/* Foto de perfil com funcionalidade de troca */}
             <div className="relative p-1 rounded-full bg-gradient-to-tr from-indigo-500/50 to-purple-500/50 overflow-hidden shadow-2xl">
               <img 
                 src={profileImage} 
                 alt="Evaldo Poeta"
                 className="w-40 h-40 rounded-full object-cover grayscale-[10%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
               />
-              {/* Overlay de Edição */}
               <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-full">
                 <i className="fas fa-camera text-white text-2xl mb-1"></i>
                 <span className="text-[8px] text-white font-bold uppercase tracking-widest">Alterar Foto</span>
               </div>
             </div>
             
-            {/* Badge flutuante de edição para mobile */}
             <div className="absolute bottom-1 right-1 bg-indigo-600 w-8 h-8 rounded-full border-2 border-[#030712] flex items-center justify-center text-white text-xs shadow-lg group-active:scale-90 transition-transform">
               <i className="fas fa-pencil-alt"></i>
             </div>
             
-            {/* Input de arquivo oculto */}
             <input 
               type="file" 
               ref={fileInputRef} 
@@ -184,12 +184,13 @@ const App: React.FC = () => {
           onSaveContact={downloadVCard} 
           onShare={shareCard}
           shareStatus={shareStatus}
+          saveStatus={saveStatus}
         />
 
         {/* AI Assistant */}
         <AIChat />
 
-        {/* Featured Method Section */}
+        {/* Featured Method Section Expanded */}
         <div className="mt-6 glass-panel rounded-3xl overflow-hidden group animate-fade-in" style={{ animationDelay: '0.6s' }}>
           <div className="p-5">
             <div className="flex items-center gap-3 mb-3">
@@ -201,14 +202,18 @@ const App: React.FC = () => {
                 <p className="text-[10px] text-indigo-300 uppercase tracking-widest font-bold">Poesia Cognitiva Hipnótica</p>
               </div>
             </div>
-            <p className="text-gray-400 text-xs leading-relaxed mb-4">
-              Uma abordagem inovadora que utiliza a métrica poética e sugestões hipnóticas para o despertar da consciência e cura psíquica.
+            <p className="text-gray-300 text-xs leading-relaxed mb-2 font-medium">
+              A PCH não é apenas técnica, é um despertar.
+            </p>
+            <p className="text-gray-400 text-[11px] leading-relaxed mb-5 italic border-l-2 border-indigo-500/30 pl-3">
+              Através da métrica poética e da sugestão analítica, acessamos as camadas mais profundas do psiquismo para reescrever narrativas de dor em versos de autonomia.
             </p>
             <button 
               onClick={() => window.open('https://m.youtube.com/@oevaldopoeta', '_blank')}
-              className="w-full text-white text-[10px] font-bold uppercase border border-indigo-500/30 bg-indigo-500/5 py-3 rounded-xl hover:bg-indigo-500/20 transition-all tracking-widest"
+              className="w-full flex items-center justify-center gap-2 text-white text-[10px] font-bold uppercase border border-indigo-500/50 bg-indigo-500/10 py-3.5 rounded-xl hover:bg-indigo-600 transition-all tracking-[0.2em] shadow-lg shadow-indigo-500/5 group-hover:scale-[1.02]"
             >
-              Conhecer o Método no YouTube
+              <i className="fab fa-youtube text-red-500"></i>
+              Explorar a Ciência da PCH
             </button>
           </div>
         </div>

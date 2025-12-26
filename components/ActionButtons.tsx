@@ -1,12 +1,14 @@
+
 import React from 'react';
 
 interface ActionButtonsProps {
   onSaveContact: () => void;
   onShare: () => void;
   shareStatus: 'idle' | 'copied';
+  saveStatus: 'idle' | 'saved';
 }
 
-const ActionButtons: React.FC<ActionButtonsProps> = ({ onSaveContact, onShare, shareStatus }) => {
+const ActionButtons: React.FC<ActionButtonsProps> = ({ onSaveContact, onShare, shareStatus, saveStatus }) => {
   return (
     <div className="space-y-3 mt-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
       {/* CTAs Principais */}
@@ -15,34 +17,40 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ onSaveContact, onShare, s
           href="https://wa.me/5511961226754" 
           target="_blank" 
           rel="noreferrer"
-          className="bg-green-600/20 border border-green-500/30 p-4 rounded-2xl flex flex-col items-center justify-center transition-all hover:bg-green-600/30 active:scale-95 group"
+          className="bg-green-600/20 border border-green-500/30 p-4 rounded-2xl flex flex-col items-center justify-center transition-all hover:bg-green-600/30 active:scale-95 group overflow-hidden"
         >
           <i className="fab fa-whatsapp text-2xl mb-1 text-green-400 whatsapp-pulse group-hover:scale-110 group-active:scale-100 transition-transform"></i>
           <span className="text-[10px] font-bold uppercase tracking-widest text-white">WhatsApp</span>
         </a>
         <button 
           onClick={onSaveContact}
-          className="bg-indigo-600 p-4 rounded-2xl flex flex-col items-center justify-center transition-all hover:brightness-125 active:scale-95 shadow-lg shadow-indigo-500/20"
+          className={`${saveStatus === 'saved' ? 'bg-green-600' : 'bg-indigo-600'} p-4 rounded-2xl flex flex-col items-center justify-center transition-all hover:brightness-110 active:scale-95 shadow-lg shadow-indigo-500/20`}
         >
-          <i className="fas fa-user-plus text-2xl mb-1 text-white"></i>
-          <span className="text-[10px] font-bold uppercase tracking-widest text-white">Salvar</span>
+          <i className={`fas ${saveStatus === 'saved' ? 'fa-check animate-[bounce_0.5s_ease-in-out]' : 'fa-user-plus'} text-2xl mb-1 text-white transition-all`}></i>
+          <span className="text-[10px] font-bold uppercase tracking-widest text-white">
+            {saveStatus === 'saved' ? 'Adicionado!' : 'Salvar'}
+          </span>
         </button>
       </div>
 
-      {/* Novo Botão de Compartilhamento Proeminente */}
+      {/* Botão de Compartilhamento com Feedback Visual Animado */}
       <button 
         onClick={onShare}
         className="w-full glass-panel group flex items-center justify-center gap-3 p-4 rounded-2xl border border-white/10 hover:bg-white/10 transition-all active:scale-[0.98]"
       >
-        <i className={`fas ${shareStatus === 'copied' ? 'fa-check text-green-400' : 'fa-share-nodes text-indigo-400'} text-xl group-hover:scale-110 transition-transform`}></i>
+        <div className="relative">
+          <i className={`fas ${shareStatus === 'copied' ? 'fa-check text-green-400 animate-[ping_1s_ease-in-out_infinite]' : 'fa-share-nodes text-indigo-400'} text-xl group-hover:scale-110 transition-transform`}></i>
+          {shareStatus === 'copied' && (
+             <i className="fas fa-check text-green-400 text-xl absolute inset-0"></i>
+          )}
+        </div>
         <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">
           {shareStatus === 'copied' ? 'Link Copiado!' : 'Compartilhar Cartão'}
         </span>
       </button>
 
-      {/* Ordem Ideal de Redes Sociais */}
+      {/* Redes Sociais */}
       <div className="grid grid-cols-1 gap-2">
-        {/* 1. Instagram Principal */}
         <a 
           href="https://www.instagram.com/oevaldopoeta/" 
           target="_blank" rel="noreferrer"
@@ -58,7 +66,6 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ onSaveContact, onShare, s
           <i className="fas fa-chevron-right text-[10px] text-gray-600 group-hover:translate-x-1 transition-transform"></i>
         </a>
 
-        {/* 2. YouTube */}
         <a 
           href="https://www.youtube.com/@oevaldopoeta" 
           target="_blank" rel="noreferrer"
@@ -74,7 +81,6 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ onSaveContact, onShare, s
           <i className="fas fa-chevron-right text-[10px] text-gray-600 group-hover:translate-x-1 transition-transform"></i>
         </a>
 
-        {/* 3. LinkedIn */}
         <a 
           href="https://www.linkedin.com/in/evaldo-santana-b8ba292a9" 
           target="_blank" rel="noreferrer"
@@ -90,7 +96,6 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ onSaveContact, onShare, s
           <i className="fas fa-chevron-right text-[10px] text-gray-600 group-hover:translate-x-1 transition-transform"></i>
         </a>
 
-        {/* 4. TikTok */}
         <a 
           href="https://www.tiktok.com/@oevaldopoeta" 
           target="_blank" rel="noreferrer"
@@ -106,7 +111,6 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ onSaveContact, onShare, s
           <i className="fas fa-chevron-right text-[10px] text-gray-600 group-hover:translate-x-1 transition-transform"></i>
         </a>
 
-        {/* 5. Kwai */}
         <a 
           href="https://www.kwai.com/@oevaldopoeta" 
           target="_blank" rel="noreferrer"
@@ -122,7 +126,6 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ onSaveContact, onShare, s
           <i className="fas fa-chevron-right text-[10px] text-gray-600 group-hover:translate-x-1 transition-transform"></i>
         </a>
 
-        {/* Instagram Secundário */}
         <a 
           href="https://www.instagram.com/evaldopoetaoficial/" 
           target="_blank" rel="noreferrer"

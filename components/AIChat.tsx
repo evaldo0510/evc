@@ -40,7 +40,7 @@ const AIChat: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
-      content: 'Bem-vindo ao espaço de consciência do Evaldo Poeta. Como as palavras podem te libertar hoje?',
+      content: 'Bem-vindo ao refúgio do silêncio e da palavra. Sou o Oráculo PCH. Como as estrofes da sua vida podem se transformar em cura e liberdade hoje?',
       timestamp: new Date()
     }
   ]);
